@@ -24,9 +24,10 @@ namespace ECS.Systems
             : this(set)
         {
             ep.OnEntityAdded += this.OnEntityAdded;
+            ep.OnEntityRemoved += this.OnEntityRemoved;
         }
 
-        public SystemBase(HashSet<Type> set, IEntitesProvider.EntityCreatedEventHandler eh)
+        public SystemBase(HashSet<Type> set, IEntitesProvider.EntityOperationEventHandler eh)
             : this(set)
         {
             eh += this.OnEntityAdded;
@@ -45,7 +46,7 @@ namespace ECS.Systems
                 entities.AddLast(entity);
         }
 
-        private void OnEntityDestroyed(Entity entity)
+        private void OnEntityRemoved(Entity entity)
         {
             var node = entities.Find(entity);
             if (node != null)

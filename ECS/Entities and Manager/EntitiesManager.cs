@@ -1,43 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ECS.Entities_and_Manager
 {
-    using Components;
-    using Entities_and_Manager;
-    using System.Diagnostics;
-
     class EntitiesManager : IEntitesProvider
     {
-        LinkedList<Entity> entities = new LinkedList<Entity>(); //maybe not even need it here
+        Dictionary<string, Entity> entities = new Dictionary<string, Entity>();
 
-        //public delegate void EntityCreatedEventHandler(Entity entity);
-        //public event EntityCreatedEventHandler OnEntityCreated;
-
-        // to make entities very dynamic kind
-        //public delegate void EntityComponentsSetModifiedEventHandler(Entity entity);
-        //public event EntityComponentsSetModifiedEventHandler OnEntityComponentsSetModified;
-
-        public event IEntitesProvider.EntityCreatedEventHandler OnEntityAdded;
+        public event IEntitesProvider.EntityOperationEventHandler OnEntityAdded;
+        public event IEntitesProvider.EntityOperationEventHandler OnEntityRemoved;
 
         public Entity CreateEntity(string name, HashSet<Type> set)
             // where each Type obj : is typeof(IComponent)
         {
             Entity e = new Entity(name, set);
 
+            entities.Add(name, e);
+
             OnEntityAdded?.Invoke(e);
 
-            entities.AddLast(e);
             return e;
         }
 
         public void AddNewEntity(Entity entity)
         {
-            OnEntityAdded?.Invoke(entity);
+            entities.Add(entity.Name, entity);
 
-            entities.AddLast(entity);
+            OnEntityAdded?.Invoke(entity);
         }
 
+        public IEnumerable<Entity> GetList()
+        {
+            return entities.Values;
+        }
+
+        internal void RemoveEntity(string name)
+        {
+            Entity e = entities[name];
+            entities.Remove(name);
+            OnEntityRemoved?.Invoke(e);
+        }
     }
 }

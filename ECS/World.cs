@@ -73,13 +73,38 @@ namespace ECS
 
         internal static void Run()
         {
-            Debug.WriteLine("Running Demo entities:");
-            Console.WriteLine("Running Demo entities:");
-            for(int counter = 10; counter >0; --counter)
+            Console.WriteLine("Entity Manager currently has the following Entities:");
+
+            var allEntities = entitiesManager.GetList();
+
+            foreach (Entity e in allEntities)
+            {
+                Console.Write(e.Name + " which is : ");
+                var components = e.GetTraits();
+                foreach(var c in components)
+                {
+                    Console.Write(c.Name + ", ");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("\nRunning Demo entities:");
+            for(int counter = 5; counter >0; --counter)
             {
                 movingSystem.UpdateSystem();
                 drawingSystem.UpdateSystem();
             }
+
+            entitiesManager.RemoveEntity("Car");
+            Console.WriteLine("\nCar removed.");
+
+            Console.WriteLine("\nRunning Demo entities:");
+            for (int counter = 5; counter > 0; --counter)
+            {
+                movingSystem.UpdateSystem();
+                drawingSystem.UpdateSystem();
+            }
+
         }
 
 

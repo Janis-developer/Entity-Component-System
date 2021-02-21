@@ -2,7 +2,8 @@
 {
     public interface IEntitesProvider
     {
-        public delegate void EntityCreatedEventHandler(Entity entity);
-        public event EntityCreatedEventHandler OnEntityAdded;
+        public delegate void EntityOperationEventHandler(Entity entity);
+        public event EntityOperationEventHandler OnEntityAdded;
+        public event EntityOperationEventHandler OnEntityRemoved;
     }
 }
