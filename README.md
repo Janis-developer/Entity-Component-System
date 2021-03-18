@@ -1,5 +1,4 @@
 # Entity-Component-System
 
-Entity–component–system (ECS) is an architectural pattern that is mostly used in game development. ECS follows the composition over inheritance principle. ECS separates data from logic. 
-It has its pros and cons. It is everyone individual preferences - to use classique  hierarchy approach or kinda db table approach.
-Implementation I provide here is one of the ways. I came to conclusion that some combination of both approaches might be beneficial in certain scenarios.
+This implementation was done as a test task for a gaming company. The main disadvantage of Entity–component–system - it destroys one of the pillars of OOD – encapsulation. Another disadvantage - ECS is a table-like approach. Which is less convenient for human to understand/debug, when comparing with good designed hierarchy. As an old school, I prefer classic hierarchy design. 
+Anyway, the task was done, and I provide it here. Implementation I show here is one of the ways. I came to conclusion that some combination of both approaches might be beneficial in certain scenarios.
